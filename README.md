@@ -205,4 +205,4 @@ The first cold build (dependencies only) took about 6 minutes with 2 jobs; `targ
 
 ## License
 
-MIT — see `LICENSE`.
+MIT — see `LICENSE`. The Qubi name, logo and mascot are not covered by the MIT License — see `TRADEMARKS.md`.
