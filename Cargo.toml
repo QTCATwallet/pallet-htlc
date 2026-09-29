@@ -1,0 +1,71 @@
+[package]
+authors = ["Qubi Team"]
+description = "Native hash-time-locked transfers (HTLC) for Quantus"
+edition = "2021"
+license = "MIT"
+name = "pallet-htlc"
+version = "0.1.0"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+# ---------------------------------------------------------------------------------------------
+# Standalone build: every dependency is pinned to the exact Quantus-Network/chain commit this
+# pallet was written against (482c5b9e, 2026-09-21), and `Cargo.lock` is seeded from that
+# commit's lockfile, so the crates.io `sp-*` versions are byte-identical to the chain's.
+#
+# To merge into the chain workspace, replace each `{ git = ..., rev = ... }` below with
+# `.workspace = true` (see README.md) and delete the `[patch.crates-io]` section.
+# ---------------------------------------------------------------------------------------------
+
+[dependencies]
+codec = { package = "parity-scale-codec", version = "3.6.12", default-features = false, features = ["derive", "max-encoded-len"] }
+frame-benchmarking = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619", default-features = false, optional = true }
+frame-support = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619", default-features = false }
+frame-system = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619", default-features = false }
+log = { version = "0.4.22", default-features = false }
+scale-info = { version = "2.11.6", default-features = false, features = ["derive"] }
+sp-core = { version = "39.0.0", default-features = false }
+sp-io = { version = "44.0.0", default-features = false }
+sp-runtime = { version = "45.0.0", default-features = false }
+
+[dev-dependencies]
+hex-literal = { version = "1.0.0" }
+pallet-balances = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619", features = ["std"] }
+sha2 = { version = "0.10" }
+
+[features]
+default = ["std"]
+runtime-benchmarks = [
+	"frame-benchmarking/runtime-benchmarks",
+	"frame-support/runtime-benchmarks",
+	"frame-system/runtime-benchmarks",
+	"sp-runtime/runtime-benchmarks",
+]
+std = [
+	"codec/std",
+	"frame-benchmarking?/std",
+	"frame-support/std",
+	"frame-system/std",
+	"log/std",
+	"scale-info/std",
+	"sp-core/std",
+	"sp-io/std",
+	"sp-runtime/std",
+]
+try-runtime = [
+	"frame-support/try-runtime",
+	"frame-system/try-runtime",
+	"sp-runtime/try-runtime",
+]
+
+# The chain vendors (and patches) these FRAME crates; mirror its `[patch.crates-io]` so that
+# crates.io consumers inside the graph resolve to the very same copies.
+[patch.crates-io]
+frame-benchmarking = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619" }
+frame-metadata = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619" }
+frame-support = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619" }
+frame-support-procedural = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619" }
+frame-support-procedural-tools = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619" }
+frame-support-procedural-tools-derive = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619" }
+frame-system = { git = "https://github.com/Quantus-Network/chain", rev = "482c5b9e02bec0adc70797eade0a67f60baf2619" }
